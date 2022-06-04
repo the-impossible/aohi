@@ -1,2 +1,2 @@
-# aohi
+# AOHI
 Adonai Orphanage Home Institute
