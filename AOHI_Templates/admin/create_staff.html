@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} STAFF{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Create {{ type }} Account</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'aohi_admin:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Create {{ type }}</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 d-flex flex-column align-items-center justify-content-center">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="pt-4 pb-2">
+                <h5 class="card-title text-center pb-0 fs-4">Create a {{ type }} Account</h5>
+                <p class="text-center small">Enter personal details of the {{ type|lower }} to create account</p>
+              </div>
+              {% include "include/messages.html" %}
+              {% include "include/staff_creation.html" %}
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Account Creation Info</h5>
+              <p>Provide staff with login details (email and password) in other for them to make changes to their profile. default password recommended</p>
+            </div>
+          </div>
+
+        </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% include 'include/auth_script.html' %}
+{% include "include/toggle.html" %}
+{% endblock body %}

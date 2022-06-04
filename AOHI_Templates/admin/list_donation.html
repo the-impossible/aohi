@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Manage Donation{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+
+<main id="main" class="main">
+	<div class="pagetitle">
+		<h1>Manage Donations</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{% url 'aohi_admin:dashboard' %}">Home</a>
+				</li>
+				<li class="breadcrumb-item active">Donations</li>
+			</ol>
+		</nav>
+	</div>
+	<!-- End Page Title -->
+
+	<section class="section">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Donations</h5>
+            {% if request.user.is_staff %}
+						<p>The table contains all donations made to AOHI</p>
+            {% else %}
+						<p>The table contains all donations made by you to AOHI</p>
+            {% endif %}
+						<!-- Table with stripped rows -->
+						{% if donations %}
+						<table class="table datatable table-striped table-hover">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Firstname</th>
+									<th scope="col">Lastname</th>
+									<th scope="col">Phone Number</th>
+									<th scope="col">Email</th>
+									<th scope="col">Amount</th>
+									<th scope="col">Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for donated in donations %}
+								<tr>
+									<th scope="row">{{ forloop.counter }}</th>
+									<td>{{ donated.firstname }}</td>
+									<td>{{ donated.lastname }}</td>
+									<td>{{ donated.phone }}</td>
+									<td>{{ donated.email }}</td>
+									<td>{{ donated.amount }}</td>
+									<td>{{ donated.date_paid }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+						<!-- End Table with stripped rows -->
+						{% else %}
+						<div class="row">
+							<div class="col-lg-8 mx-auto mt-5">
+								<div class="card">
+									<div class="card-body">
+										<div class="my-3 mt-5 text-center">
+											<p>There is no Donation record</p>
+											<a
+												href="{% url 'aohi_admin:make_donation' request.user.id %}"
+												class="btn btn-primary btn-sm mx-auto"
+												>Add Donations</a
+											>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- End #main -->
+{% include 'include/auth_script.html' %} {% endblock body %}

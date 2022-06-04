@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Manage Orphans{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Manage Orphans</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'aohi_admin:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Orphans</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    {% include "include/manage_orphans.html" %}
+  </main><!-- End #main -->
+{% include 'include/auth_script.html' %}
+{% endblock body %}

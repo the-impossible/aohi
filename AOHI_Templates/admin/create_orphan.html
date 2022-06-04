@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} ORPHAN{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Create Orphan Account</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'aohi_admin:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Create Orphan</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 d-flex flex-column align-items-center justify-content-center">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="pt-4 pb-2">
+                <h5 class="card-title text-center pb-0 fs-4">Create a Orphan Record</h5>
+                <p class="text-center small">Enter personal details of the orphan to create account</p>
+              </div>
+              {% include "include/messages.html" %}
+              <form class="row g-3 needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="col-md-6 col-sm-12">
+                  <label for="firstname" class="form-label">Firstname</label>
+                  {{ form.firstname }}
+                  {% if form.firstname.errors %}
+                    <div class="alert alert-danger mt-2" role="alert">
+                      {{ form.firstname.errors }}
+                    </div>
+                  {% endif %}
+                  <div class="invalid-feedback">Please, enter your Firstname!</div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <label for="lastname" class="form-label">Lastname</label>
+                  {{ form.lastname }}
+                  {% if form.lastname.errors %}
+                    <div class="alert alert-danger mt-2 " role="alert">
+                      {{ form.lastname.errors }}
+                    </div>
+                  {% endif %}
+                  <div class="invalid-feedback">Please enter your Lastname</div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <label for="state" class="form-label">Date of birth</label>
+                  {{ form.dob }}
+                  {% if form.dob.errors %}
+                    <div class="alert alert-danger mt-2 " role="alert">
+                      {{ form.dob.errors }}
+                    </div>
+                  {% endif %}
+                  <div class="invalid-feedback">Please enter child DOB</div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <label for="gender" class="form-label">Gender</label>
+                  {{ form.gender }}
+                  {% if form.gender.errors %}
+                    <div class="alert alert-danger mt-2 " role="alert">
+                      {{ form.gender.errors }}
+                    </div>
+                  {% endif %}
+                  <div class="invalid-feedback">Please select your Gender</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="picture" class="form-label">Picture</label>
+                  {{ form.picture }}
+                  {% if form.picture.errors %}
+                    <div class="alert alert-danger mt-2 " role="alert">
+                      {{ form.picture.errors }}
+                    </div>
+                  {% endif %}
+                  <div class="invalid-feedback">Please select your Picture</div>
+                </div>
+
+                <div class="col-12">
+                  <button class="btn btn-primary w-100" type="submit">Submit Record</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Account Creation Info</h5>
+              <p>Provide the right information of the child, as it what adopters would make use of</p>
+            </div>
+          </div>
+
+        </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% include 'include/auth_script.html' %}
+{% include "include/toggle.html" %}
+{% endblock body %}

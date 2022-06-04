@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Manage Adoption{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+
+<main id="main" class="main">
+	<div class="pagetitle">
+		<h1>Manage Adoption</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{% url 'aohi_admin:dashboard' %}">Home</a>
+				</li>
+				<li class="breadcrumb-item active">Adoption</li>
+			</ol>
+		</nav>
+	</div>
+	<!-- End Page Title -->
+
+	<section class="section">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Adoption</h5>
+						{% if request.user.is_staff %}
+						<p>The table contains all Adoption made from AOHI</p>
+						{% else %}
+						<p>The table contains all Adoption made by you from AOHI</p>
+						{% endif %}
+						<!-- Table with stripped rows -->
+						{% if adoptions %}
+						<table class="table datatable table-striped table-hover">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Picture</th>
+									<th scope="col">Firstname</th>
+									<th scope="col">Lastname</th>
+									<th scope="col">Date of Birth</th>
+									<th scope="col">Gender</th>
+									<th scope="col">Adopted Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for adopted in adoptions %}
+								<tr>
+									<th scope="row">{{ forloop.counter }}</th>
+									<td><a href="{% url 'auth:orphan_profile' adopted.orphan.id %}"><img src="{% if orphan.imageURL != '' %} {{ adopted.orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
+									<td>{{ adopted.orphan.firstname }}</td>
+									<td>{{ adopted.orphan.lastname }}</td>
+									<td>{{ adopted.orphan.dob }}</td>
+									<td>{{ adopted.orphan.gender }}</td>
+									<td>{{ adopted.orphan.date_created }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+						<!-- End Table with stripped rows -->
+						{% else %}
+						<div class="row">
+							<div class="col-lg-8 mx-auto mt-5">
+								<div class="card">
+									<div class="card-body">
+										<div class="my-3 mt-5 text-center">
+											<p>There is no adoptions record</p>
+											<a
+												href="{% url 'auth:list_orphans' %}"
+												class="btn btn-primary btn-sm mx-auto"
+												>Make Adoption</a
+											>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- End #main -->
+{% include 'include/auth_script.html' %} {% endblock body %}

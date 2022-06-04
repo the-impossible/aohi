@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Adoption Request{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Adoption Request</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'aohi_admin:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Request</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+          <div class="col-lg-12">
+              {% include "include/messages.html" %}
+          <div class="card">
+              <div class="card-body">
+              <h5 class="card-title">Adoption Request</h5>
+              <p>The table contains all adoption Request made by you, confirm if any filed request has been approved </p>
+
+              <!-- Table with stripped rows -->
+              {% if adoptions %}
+              <table class="table datatable table-striped table-hover">
+                  <thead class="thead-light">
+                  <tr>
+                      <th scope="col" class="text-center">#</th>
+                      <th scope="col" class="text-center">Picture</th>
+                      <th scope="col" class="text-center">Firstname</th>
+                      <th scope="col" class="text-center">Lastname</th>
+                      <th scope="col" class="text-center">Status</th>
+                      <th scope="col" class="text-center">Requested By</th>
+                      <th scope="col" class="text-center">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for orphan in adoptions %}
+                  <tr class="text-center">
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'auth:orphan_profile' orphan.orphan.id %}"><img src="{% if orphan.orphan.imageURL != '' %} {{ orphan.orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
+                      <td>{{ orphan.orphan.firstname }}</td>
+                      <td>{{ orphan.orphan.lastname }}</td>
+                      {% if orphan.status %}
+
+                        {% if orphan.adopted %}
+                        <td class="text-success">Adopted
+                        {% else %}
+                        <td class="text-success">Approved
+                        {% endif %}
+                      {% else %}
+                        {% if orphan.adopted %}
+                        <td class="text-danger">Declined
+                          {% else %}
+                        <td class="text-warning">Pending
+                        {% endif %}
+                      {% endif %}
+                      </td>
+                      <td>{{ orphan.user }}</td>
+                      <td>
+                        {% if orphan.adopted %}
+                        {% elif not orphan.status %}
+                        <a class="btn btn-sm btn-outline-warning">Make Payment</a>
+                        {% else %}
+                          {% if orphan.adopted %}
+                          <a class="btn btn-sm btn-outline-success">Payment made</a>
+                          {% else %}
+                          <a href="{% url 'auth:make_payment' orphan.user.id orphan.orphan.id %}" class="btn btn-sm btn-outline-primary">Make Payment</a>
+                          {% endif %}
+                        {% endif %}
+
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+              {% else %}
+              <div class="row">
+                  <div class="col-lg-8 mx-auto mt-5">
+                  <div class="card">
+                      <div class="card-body">
+                      <div class="my-3 mt-5 text-center">
+                          <p>There is no adoption request record</p>
+                          <a href="{% url 'auth:request_orphan' %}" class="btn btn-primary btn-sm mx-auto">Request Adoption</a>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+              {% endif %}
+              </div>
+          </div>
+          </div>
+      </div>
+  </section>
+  </main><!-- End #main -->
+{% include 'include/auth_script.html' %}
+{% endblock body %}

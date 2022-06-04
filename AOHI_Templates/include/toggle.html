@@ -1,0 +1,14 @@
+<script>
+    const passwordField = document.getElementById('id_password')
+    tooglePassword.addEventListener('click', (e) => {
+        if (tooglePassword.className == 'fa fa-eye-slash') {
+            tooglePassword.classList.remove('fa-eye-slash')
+            passwordField.setAttribute('type', 'text')
+            tooglePassword.classList.add('fa-eye')
+        }else{
+            tooglePassword.classList.remove('fa-eye')
+            passwordField.setAttribute('type', 'password')
+            tooglePassword.classList.add('fa-eye-slash')
+        }
+    })
+</script>

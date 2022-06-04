@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Profile{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+  {% include 'include/login_nav.html' %}
+  {% include 'include/sidebar.html' %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'aohi_admin:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'auth:list_orphans' %}">Orphan</a></li>
+          <li class="breadcrumb-item active">Profile</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+        {% include "include/messages.html" %}
+        <div class="col-xl-4">
+          <div class="card">
+            {% if request.user.is_staff %}
+            <div class="card-header">
+              <div class="align-items-right">
+                <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</a>
+              </div>
+            </div>
+          {% endif %}
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <img src="{{ orphan.imageURL }}" width="60" alt="Profile" class="rounded-circle">
+              <h2>{{ orphan.firstname }} {{ orphan.lastname }}</h2>
+              <h3> AOHI Orphan </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-8">
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                </li>
+                {% if request.user.is_staff %}
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                </li>
+                {% endif %}
+              </ul>
+              <div class="tab-content pt-3">
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">Profile Details</h5>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-9 col-md-8">{{ orphan.firstname }} {{ orphan.lastname }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+                    <div class="col-lg-9 col-md-8">{{ orphan.dob }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Gender</div>
+                    <div class="col-lg-9 col-md-8">{{ orphan.gender }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Status</div>
+                    <div class="col-lg-9 col-md-8">
+                      {% if orphan.status %}
+                      <label for="" class="text-success">Available for adoption</label>
+                      {% else %}
+                      <label for="" class="text-primary">Adopted</label>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                  <!-- Profile Edit Form -->
+                  <form method="POST" class="row g-3" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                      <div  class="col-md-4 col-lg-3">
+                        <label for="profileImage" class="col-form-label">Profile Image</label>
+                      </div>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="row">
+                          <div class="col-md-3 col-lg-3">
+                            <img {% if user.imageURL != '' %} src="{{ orphan.imageURL }}" width="100" {% else %} src="{% static 'uploaded/user.png' %}" {% endif %} alt="Profile">
+                          </div>
+                          <div class="col-md-9 col-lg-9">
+                            <div class="pt-2">
+                              {{ pic_form.picture}}
+                              {% if pic_form.picture.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                  {{ pic_form.picture.errors }}
+                                </div>
+                              {% endif %}
+                            </div>
+                            <br>
+                            <div class="mb-3">
+                              <button type="submit" name="picture" title="Upload new profile image" class="btn btn-primary w-100"><i class="bi bi-upload"></i> Upload picture</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+
+                  <form method="POST" class="row g-3 needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                      <label for="firstname" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{ form.firstname }}
+                        {% if form.firstname.errors %}
+                        <div class="alert alert-danger mt-2" role="alert">
+                          {{ form.firstname.errors }}
+                        </div>
+                      {% endif %}
+                      <div class="invalid-feedback">Please, enter your Firstname!</div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="lastname" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                      <div class="col-md-8 col-lg-9">
+                      {{ form.lastname }}
+                        {% if form.lastname.errors %}
+                        <div class="alert alert-danger mt-2" role="alert">
+                          {{ form.lastname.errors }}
+                        </div>
+                      {% endif %}
+                      <div class="invalid-feedback">Please, enter your Lastname!</div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="dob" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{ form.dob }}
+                        {% if form.dob.errors %}
+                        <div class="alert alert-danger mt-2" role="alert">
+                          {{ form.dob.errors }}
+                        </div>
+                      {% endif %}
+                      <div class="invalid-feedback">pre populated field!</div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="admin_phone" class="col-md-4 col-lg-3 col-form-label">Gender</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{ form.gender }}
+                        {% if form.gender.errors %}
+                        <div class="alert alert-danger mt-2" role="alert">
+                          {{ form.gender.errors }}
+                        </div>
+                      {% endif %}
+                      <div class="invalid-feedback">pre populated field!</div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="admin_phone" class="col-md-4 col-lg-3 col-form-label">Status</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                        <div class="alert alert-danger mt-2" role="alert">
+                          {{ form.status.errors }}
+                        </div>
+                      {% endif %}
+                      <div class="invalid-feedback">pre populated field!</div>
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" name="info" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+                </div>
+              </div>
+            </div><!-- End Bordered Tabs -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete {{ orphan.firstname }} 's Account?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">Select "Delete" below if you want to delete the account.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+            <form method="POST">
+              {% csrf_token %}
+              <button type="submit" name="delete" class="btn btn-danger btn-block">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main><!-- End #main -->
+{% include 'include/auth_script.html' %}
+{% endblock body %}

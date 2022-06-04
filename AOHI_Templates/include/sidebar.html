@@ -1,0 +1,240 @@
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+    <a class="nav-link " href="{% url 'aohi_admin:dashboard' %}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+    </a>
+    </li><!-- End Dashboard Nav -->
+  {% if request.user.is_superuser %}
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#componentss-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Donation</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="componentss-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'aohi_admin:make_donation' request.user.id %}">
+            <i class="bi bi-circle"></i><span>Make Donation</span>
+          </a>
+        </li>
+        </li>
+        <li>
+          <a href="{% url 'aohi_admin:donations' %}">
+            <i class="bi bi-circle"></i><span>Manage Donations</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Components Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'aohi_admin:create_user' %}">
+            <i class="bi bi-circle"></i><span>Create User</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'aohi_admin:list_users' %}">
+            <i class="bi bi-circle"></i><span>Manage Users</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Components Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-people"></i><span>Staffs</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'aohi_admin:create_staff' 's' %}">
+            <i class="bi bi-circle"></i><span>Create Staff</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'aohi_admin:list_staff' %}">
+            <i class="bi bi-circle"></i><span>Manage Staff</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Staff Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-people"></i><span>Orphans</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'aohi_admin:create_orphan' %}">
+            <i class="bi bi-circle"></i><span>Add Orphans</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bi bi-circle"></i><span>Make Adoption</span>
+          </a>
+          <a href="{% url 'aohi_admin:adoptions' %}">
+            <i class="bi bi-circle"></i><span>View Adoptions</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'auth:request_list_admin' %}">
+            <i class="bi bi-circle"></i><span>View Adoption Request</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'auth:list_orphans_admin' %}">
+            <i class="bi bi-circle"></i><span>Manage Orphans</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Students Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-people"></i><span>Admins</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'aohi_admin:create_staff' 'a' %}">
+            <i class="bi bi-circle"></i><span>Create Admin</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'aohi_admin:list_admin' %}">
+            <i class="bi bi-circle"></i><span>Manage Admins</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End of Admins Nav -->
+  {% elif request.user.is_staff %}
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#componentss-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Donation</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="componentss-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{% url 'aohi_admin:make_donation' request.user.id %}">
+          <i class="bi bi-circle"></i><span>Make Donation</span>
+        </a>
+      </li>
+      </li>
+      <li>
+        <a href="{% url 'aohi_admin:donations' %}">
+          <i class="bi bi-circle"></i><span>Manage Donations</span>
+        </a>
+      </li>
+    </ul>
+  </li><!-- End Components Nav -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{% url 'aohi_admin:create_user' %}">
+          <i class="bi bi-circle"></i><span>Create User</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'aohi_admin:list_users' %}">
+          <i class="bi bi-circle"></i><span>Manage Users</span>
+        </a>
+      </li>
+    </ul>
+  </li><!-- End Components Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+      <i class="bi bi-people"></i><span>Orphans</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{% url 'aohi_admin:create_orphan' %}">
+          <i class="bi bi-circle"></i><span>Add Orphans</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi bi-circle"></i><span>Make Adoption</span>
+        </a>
+        <a href="{% url 'aohi_admin:adoptions' %}">
+          <i class="bi bi-circle"></i><span>View Adoptions</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'auth:request_list_admin' %}">
+          <i class="bi bi-circle"></i><span>View Adoption Request</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'auth:list_orphans_admin' %}">
+          <i class="bi bi-circle"></i><span>Manage Orphans</span>
+        </a>
+      </li>
+    </ul>
+  </li><!-- End Students Nav -->
+
+  {% else %}
+  <!-- Donors -->
+  <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Donations</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'aohi_admin:make_donation' request.user.id %}">
+            <i class="bi bi-circle"></i><span>Make Donations</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'auth:my_donations' %}">
+            <i class="bi bi-circle"></i><span>View Donations</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Staff Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#orphans-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Orphans</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="orphans-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'auth:list_orphans' %}">
+            <i class="bi bi-circle"></i><span>View Orphans</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'auth:my_adoptions' %}">
+            <i class="bi bi-circle"></i><span>View Adoptions</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'auth:request_list' %}">
+            <i class="bi bi-circle"></i><span>Adoption Request List</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Orphans Nav -->
+
+  {% endif %}
+<li class="nav-heading">Pages</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'aohi_admin:profile_view' request.user.id %}">
+        <i class="bi bi-person"></i>
+        <span>Profile</span>
+      </a>
+    </li><!-- End Profile Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="bi-box-arrow-right"></i>
+        <span>Sign Out</span>
+      </a>
+    </li><!-- End Contact Page Nav -->
+  </ul>
+</aside><!-- End Sidebar-->

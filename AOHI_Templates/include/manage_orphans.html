@@ -1,0 +1,75 @@
+{% load static %}
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            {% include "include/messages.html" %}
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Orphans</h5>
+            <p>The table contains all AOHI orphans, select an child to see their profile </p>
+
+            <!-- Table with stripped rows -->
+            {% if orphans %}
+            <table class="table datatable table-striped table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Picture</th>
+                    <th scope="col" class="text-center">Firstname</th>
+                    <th scope="col" class="text-center">Lastname</th>
+                    <th scope="col" class="text-center">Phone Number</th>
+                    <th scope="col" class="text-center">Email</th>
+                    <th scope="col" class="text-center">Status</th>
+                    {% if not request.user.is_staff %} <th scope="col" class="text-center">Action</th>{% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for orphan in orphans %}
+                <tr class="text-center">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'auth:orphan_profile' orphan.id %}"><img src="{% if orphan.imageURL != '' %} {{ orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
+                    <td>{{ orphan.firstname }}</td>
+                    <td>{{ orphan.lastname }}</td>
+                    <td>{{ orphan.dob }}</td>
+                    <td>{{ orphan.gender }}</td>
+                    <td>
+                        {% if orphan.status %}
+                        <label for="" class="text-success">Available for adoption</label>
+                        {% else %}
+                        <label for="" class="text-primary">Adopted</label>
+                        {% endif %}
+                    </td>
+                    {% if not request.user.is_staff %}
+                    <td>
+                        <form action="{% url 'auth:request_orphan' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ request.user.id}}">
+                            <input type="hidden" name="orphan_id" value="{{ orphan.id}}">
+                            <button type="submit" class="btn btn-primary btn-sm">Request</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+            {% else %}
+            <div class="row">
+                <div class="col-lg-8 mx-auto mt-5">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="my-3 mt-5 text-center">
+                        <p>There is no orphan record</p>
+                        <a href="{% url 'aohi_admin:create_orphan' %}" class="btn btn-primary btn-sm mx-auto">Add Staffs</a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

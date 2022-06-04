@@ -1,0 +1,72 @@
+<form class="row g-3 needs-validation" method="post" novalidate>
+    {% csrf_token %}
+    <div class="col-md-6 col-sm-12">
+      <label for="firstname" class="form-label">Firstname</label>
+      {{ form.firstname }}
+      {% if form.firstname.errors %}
+        <div class="alert alert-danger mt-2" role="alert">
+          {{ form.firstname.errors }}
+        </div>
+      {% endif %}
+      <div class="invalid-feedback">Please, enter your Firstname!</div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <label for="lastname" class="form-label">Lastname</label>
+      {{ form.lastname }}
+      {% if form.lastname.errors %}
+        <div class="alert alert-danger mt-2 " role="alert">
+          {{ form.lastname.errors }}
+        </div>
+      {% endif %}
+      <div class="invalid-feedback">Please enter your Lastname</div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <label for="Phone" class="form-label">Phone Number</label>
+      {{ form.phone }}
+      {% if form.phone.errors %}
+        <div class="alert alert-danger mt-2 " role="alert">
+          {{ form.phone.errors }}
+        </div>
+      {% endif %}
+      <div class="invalid-feedback">Please enter your Phone Number</div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <label for="yourEmail" class="form-label">Email</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">@</span>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <div class="alert alert-danger mt-2" role="alert">
+            {{ form.email.errors }}
+          </div>
+        {% endif %}
+        <div class="invalid-feedback">Please enter a valid email.</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-12">
+      <label for="yourPassword" class="form-label">Password</label>
+      <div class="input-group has-validation">
+        {{ form.password }}
+        <span class="input-group-text " id="inputGroupPrepend">
+          <span class="fa fa-eye-slash" id="tooglePassword" style="cursor: pointer;"></span>
+        </span>
+        {% if form.password.errors %}
+          <div class="alert alert-danger mt-2" role="alert">
+            {{ form.password.errors }}
+          </div>
+        {% endif %}
+        <div class="invalid-feedback">Please enter your password!.</div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+    </div>
+    <div class="col-12 text-center mt-4">
+      <p class="small mb-0">Already have an account? <a href="{% url 'auth:login' %}">Log in</a></p>
+    </div>
+  </form>

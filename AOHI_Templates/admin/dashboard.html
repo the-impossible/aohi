@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Dashboard{% endblock %}
+{% block head %} {% include 'include/auth_head.html' %} {% endblock %}
+{% block body %}
+{% include 'include/login_nav.html' %}
+{% include 'include/sidebar.html' %}
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="row">
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+          {% include "include/messages.html" %}
+          {% if not request.user.is_staff and not request.user.is_superuser %}
+
+          <!-- Donations Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Donations</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-journal-text"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ no_my_donation }}</h6><span class="text-muted small pt-2 ps-1">Number of Donations Made</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Donations Card -->
+
+          <!-- Amount Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Amount</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-bar-chart"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ my_amount }}</h6><span class="text-muted small pt-2 ps-1">Amount Donated</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Amount Card -->
+
+           <!-- Orphans Card -->
+           <div class="col-xxl-4 col-md-4">
+            <div class="card info-card sales-card">
+              <div class="card-body">
+                <h5 class="card-title">Orphans</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ my_no_adoption }}</h6><span class="text-muted small pt-2 ps-1">Number of Children Adopted</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Orphans Card -->
+          {% endif %}
+
+          {% if request.user.is_staff %}
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card sales-card">
+              <div class="card-body">
+                <h5 class="card-title">Users</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ donors }}</h6><span class="text-muted small pt-2 ps-1">Number of Users</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <!-- End Students Card -->
+
+          {% if request.user.is_staff and request.user.is_superuser %}
+          <!-- Staff Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card revenue-card">
+              <div class="card-body">
+                <h5 class="card-title">Staffs</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ staffs }}</h6><span class="text-muted small pt-2 ps-1">Number of AOHI Staffs</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Staff Card -->
+
+
+          <!-- Courses Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Donations</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-journal-text"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ all_donations }}</h6><span class="text-muted small pt-2 ps-1">Total Number of Donations</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Courses Card -->
+
+          <!-- Amount Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Amount</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ amount  }}</h6><span class="text-muted small pt-2 ps-1">Amount Donated</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Amount Card -->
+
+          {% endif %}
+
+          {% if request.user.is_staff %}
+          <!-- Orphans Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card sales-card">
+              <div class="card-body">
+                <h5 class="card-title">Orphans</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ orphans }}</h6><span class="text-muted small pt-2 ps-1">Number of Orphans</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Orphans Card -->
+
+          <!-- Staff Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card revenue-card">
+              <div class="card-body">
+                <h5 class="card-title">Adopted</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-bar-chart"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ adoptions }}</h6><span class="text-muted small pt-2 ps-1">No. of Adopted Children</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amount Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Amount</h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ adoption_amount  }}</h6><span class="text-muted small pt-2 ps-1">Adoption Amount</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Amount Card -->
+        </div>
+          {% endif %}
+          <!-- End Staff Card -->
+
+      </div>
+      <!-- End Left side columns -->
+    </div>
+  </section>
+</main>
+  <!-- End #main -->
+{% include 'include/auth_script.html' %}
+{% endblock body %}
