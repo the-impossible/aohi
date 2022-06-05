@@ -56,9 +56,10 @@
                             {% csrf_token %}
                             <input type="hidden" name="user_id" value="{{ orphan.user.id}}">
                             <input type="hidden" name="orphan_id" value="{{ orphan.orphan.id}}">
-                              <button type="submit" name="approve"  class="btn btn-success btn-sm">Approve</button>
-                              {% if orphan.status %}
-                              <button type="submit" name="cancel"  class="btn btn-warning btn-sm ml-2">Cancel</button>
+                            {% if orphan.status %}
+                            <button type="submit" name="cancel"  class="btn btn-warning btn-sm ml-2">Disapprove</button>
+                            {% else %}
+                            <button type="submit" name="approve"  class="btn btn-success btn-sm">Approve</button>
                               {% endif %}
                           </form>
                       </td>

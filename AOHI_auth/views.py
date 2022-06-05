@@ -164,7 +164,7 @@ class RequestAdoptionListView(ListView):
 
 class RequestAdoptionListAdminView(ListView):
     def get(self, request):
-        adoptions = RequestAdoption.objects.all()
+        adoptions = RequestAdoption.objects.filter(adopted=False)
         context = {'adoptions':adoptions}
         return render(request, 'admin/adoption_request_list_admin.html', context)
 

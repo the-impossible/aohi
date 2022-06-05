@@ -17,8 +17,8 @@
                     <th scope="col" class="text-center">Picture</th>
                     <th scope="col" class="text-center">Firstname</th>
                     <th scope="col" class="text-center">Lastname</th>
-                    <th scope="col" class="text-center">Phone Number</th>
-                    <th scope="col" class="text-center">Email</th>
+                    <th scope="col" class="text-center">Date of Birth</th>
+                    <th scope="col" class="text-center">Gender</th>
                     <th scope="col" class="text-center">Status</th>
                     {% if not request.user.is_staff %} <th scope="col" class="text-center">Action</th>{% endif %}
                 </tr>
@@ -34,7 +34,7 @@
                     <td>{{ orphan.gender }}</td>
                     <td>
                         {% if orphan.status %}
-                        <label for="" class="text-success">Available for adoption</label>
+                        <label for="" class="text-success">Available</label>
                         {% else %}
                         <label for="" class="text-primary">Adopted</label>
                         {% endif %}
