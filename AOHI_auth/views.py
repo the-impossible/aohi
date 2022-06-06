@@ -269,8 +269,8 @@ class MakePaymentView(ListView, LoginRequiredMixin):
 
             messages.success(request, 'Payment successful')
 
-            return redirect('auth:request_list')
-
+            return redirect('auth:success', user_id, orphan_id)
+            
         return redirect('auth:make_payment', user_id, orphan_id)
 
 class AdoptionListView(ListView, LoginRequiredMixin):
@@ -296,3 +296,18 @@ class MyAdoptionListView(View, LoginRequiredMixin):
     def get(self, request):
         adoptions = Adoptions.objects.filter(user=request.user)
         return render(request, 'admin/list_adoption.html', context={'adoptions':adoptions})
+
+class AdoptionSuccessfulView(ListView, LoginRequiredMixin):
+    def get(self, request, user_id, orphan_id):
+        try:
+            user = Accounts.objects.get(id=user_id)
+            orphan = Orphans.objects.get(id=orphan_id)
+            context = {
+                'user':user,
+                'orphan':orphan,
+            }
+        except ObjectDoesNotExist:
+            messages.error(request, ('User profile not found!!'))
+            return redirect('aohi_admin:dashboard')
+
+        return render(request, 'auth_users/success.html', context)

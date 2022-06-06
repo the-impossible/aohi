@@ -5,9 +5,18 @@
 <script src="{% static 'bk/vendor/chart.js/chart.min.js' %}"></script>
 <script src="{% static 'bk/vendor/echarts/echarts.min.js' %}"></script>
 <script src="{% static 'bk/vendor/quill/quill.min.js' %}"></script>
-<script src="{% static 'bk/vendor/simple-datatables/simple-datatables.js' %}"></script>
-<script src="{% static 'bk/vendor/tinymce/tinymce.min.js' %}"></script>
+<!-- <script src="{% static 'bk/vendor/simple-datatables/simple-datatables.js' %}"></script> -->
 <!-- Template Main JS File -->
 <script src="{% static 'bk/js/main1.js' %}"></script>
 <script src="{% static 'bk/js/jquery.min.js' %}"></script>
+<script src="{% static 'bk/vendor/DataTables/datatables.min.js' %}"></script>
+<script>
+	$(document).ready(function () {
+		$('#myTable').DataTable({
+			dom: 'Bfrtip',
+			buttons: ['print', 'pdf', 'csv'],
+		})
+	})
+</script>
+
 <script src="{% static 'bk/js/close.js' %}"></script>

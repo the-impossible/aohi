@@ -292,7 +292,7 @@ class ProfileView(View, LoginRequiredMixin):
 
 class ListDonationsView(ListView, LoginRequiredMixin):
     template_name = 'admin/list_donation.html'
-    queryset = Donations.objects.all()
+    queryset = Donations.objects.all().order_by('-id')
     context_object_name = 'donations'
 
 class MakeDonationView(View, LoginRequiredMixin):
@@ -313,37 +313,39 @@ class MakeDonationView(View, LoginRequiredMixin):
         try:
             admin_or_user = request.user
             user = Accounts.objects.get(id=user_id)
-            form = DonationForm(request.POST, instance=user)
+            form = DonationForm(request.POST)
 
             if form.is_valid():
+                form = form.save(commit=False)
                 source = request.POST.get('stripeToken')
                 if not admin_or_user.is_superuser:
-                    amount = form.cleaned_data['amount']
+                    amount = int(form.amount)
                     email = user.email
                     firstname = user.firstname
                     lastname = user.lastname
+                    phone = user.phone
                     stripe_payment(email, firstname, lastname, amount, source)
-
                     Donations.objects.create(
-                        firstname= firstname,
-                        lastname= lastname,
-                        phone= phone,
-                        amount= amount,
-                        email= email
+                        firstname=firstname,
+                        lastname=lastname,
+                        phone=phone,
+                        amount=amount,
+                        email=email
                     )
                 else:
-                    amount = form.cleaned_data['amount']
-                    email = form.cleaned_data['email']
-                    firstname = form.cleaned_data['firstname']
-                    lastname = form.cleaned_data['lastname']
+                    amount = int(form.amount)
+                    email = form.email
+                    firstname = form.firstname
+                    lastname = form.lastname
+                    phone = form.phone
                     stripe_payment(email, firstname, lastname, amount, source)
 
                     Donations.objects.create(
-                        firstname= firstname,
-                        lastname= lastname,
-                        phone= phone,
-                        amount= amount,
-                        email= email
+                        firstname=firstname,
+                       lastname=lastname,
+                       phone=phone,
+                       amount=amount,
+                       email=email
                     )
                 messages.success(request, 'Thank you for your generous donation')
 

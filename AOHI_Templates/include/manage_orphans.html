@@ -10,49 +10,51 @@
 
             <!-- Table with stripped rows -->
             {% if orphans %}
-            <table class="table datatable table-striped table-hover">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">Picture</th>
-                    <th scope="col" class="text-center">Firstname</th>
-                    <th scope="col" class="text-center">Lastname</th>
-                    <th scope="col" class="text-center">Date of Birth</th>
-                    <th scope="col" class="text-center">Gender</th>
-                    <th scope="col" class="text-center">Status</th>
-                    {% if not request.user.is_staff %} <th scope="col" class="text-center">Action</th>{% endif %}
-                </tr>
-                </thead>
-                <tbody>
-                {% for orphan in orphans %}
-                <tr class="text-center">
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'auth:orphan_profile' orphan.id %}"><img src="{% if orphan.imageURL != '' %} {{ orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
-                    <td>{{ orphan.firstname }}</td>
-                    <td>{{ orphan.lastname }}</td>
-                    <td>{{ orphan.dob }}</td>
-                    <td>{{ orphan.gender }}</td>
-                    <td>
-                        {% if orphan.status %}
-                        <label for="" class="text-success">Available</label>
-                        {% else %}
-                        <label for="" class="text-primary">Adopted</label>
+            <div class="table-responsive">
+                <table id="myTable" class="table datatable table-striped table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">Picture</th>
+                        <th scope="col" class="text-center">Firstname</th>
+                        <th scope="col" class="text-center">Lastname</th>
+                        <th scope="col" class="text-center">Date of Birth</th>
+                        <th scope="col" class="text-center">Gender</th>
+                        <th scope="col" class="text-center">Status</th>
+                        {% if not request.user.is_staff %} <th scope="col" class="text-center">Action</th>{% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for orphan in orphans %}
+                    <tr class="text-center">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a href="{% url 'auth:orphan_profile' orphan.id %}"><img src="{% if orphan.imageURL != '' %} {{ orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
+                        <td>{{ orphan.firstname }}</td>
+                        <td>{{ orphan.lastname }}</td>
+                        <td>{{ orphan.dob }}</td>
+                        <td>{{ orphan.gender }}</td>
+                        <td>
+                            {% if orphan.status %}
+                            <label for="" class="text-success">Available</label>
+                            {% else %}
+                            <label for="" class="text-primary">Adopted</label>
+                            {% endif %}
+                        </td>
+                        {% if not request.user.is_staff %}
+                        <td>
+                            <form action="{% url 'auth:request_orphan' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ request.user.id}}">
+                                <input type="hidden" name="orphan_id" value="{{ orphan.id}}">
+                                <button type="submit" class="btn btn-primary btn-sm">Request</button>
+                            </form>
+                        </td>
                         {% endif %}
-                    </td>
-                    {% if not request.user.is_staff %}
-                    <td>
-                        <form action="{% url 'auth:request_orphan' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="user_id" value="{{ request.user.id}}">
-                            <input type="hidden" name="orphan_id" value="{{ orphan.id}}">
-                            <button type="submit" class="btn btn-primary btn-sm">Request</button>
-                        </form>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <!-- End Table with stripped rows -->
             {% else %}
             <div class="row">

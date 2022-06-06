@@ -14,6 +14,7 @@ from AOHI_auth.views import (
     MakePaymentView,
     MyDonationListView,
     MyAdoptionListView,
+    AdoptionSuccessfulView,
 )
 
 app_name = 'auth'
@@ -40,5 +41,6 @@ urlpatterns = [
 
     # ADOPTIONS
     path('my_adoptions', MyAdoptionListView.as_view(), name='my_adoptions'),
+    path('success/<int:user_id>/<int:orphan_id>', AdoptionSuccessfulView.as_view(), name='success'),
 
 ]

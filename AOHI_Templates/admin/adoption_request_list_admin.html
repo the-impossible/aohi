@@ -27,7 +27,8 @@
 
               <!-- Table with stripped rows -->
               {% if adoptions %}
-              <table class="table datatable table-striped table-hover">
+              <div class="table-responsive">
+                <table class="table datatable table-striped table-hover">
                   <thead class="thead-light">
                   <tr>
                       <th scope="col" class="text-center">#</th>
@@ -67,6 +68,7 @@
                   {% endfor %}
                   </tbody>
               </table>
+              </div>
               <!-- End Table with stripped rows -->
               {% else %}
               <div class="row">

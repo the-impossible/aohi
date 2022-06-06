@@ -33,34 +33,37 @@
 						{% endif %}
 						<!-- Table with stripped rows -->
 						{% if adoptions %}
-						<table class="table datatable table-striped table-hover">
-							<thead class="thead-light">
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Picture</th>
-									<th scope="col">Firstname</th>
-									<th scope="col">Lastname</th>
-									<th scope="col">Date of Birth</th>
-									<th scope="col">Gender</th>
-									<th scope="col">Adopted By</th>
-									<th scope="col">Adopted Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for adopted in adoptions %}
-								<tr>
-									<th scope="row">{{ forloop.counter }}</th>
-									<td><a href="{% url 'auth:orphan_profile' adopted.orphan.id %}"><img src="{% if adopted.orphan.imageURL != '' %} {{ adopted.orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
-									<td>{{ adopted.orphan.firstname }}</td>
-									<td>{{ adopted.orphan.lastname }}</td>
-									<td>{{ adopted.orphan.dob }}</td>
-									<td>{{ adopted.orphan.gender }}</td>
-									<td><a href="{% url 'aohi_admin:profile_view' adopted.user.id %}"><img src="{% if adopted.user.imageURL != '' %} {{ adopted.user.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a>{{ adopted.user.firstname }}</td>
-									<td>{{ adopted.orphan.date_created }}</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
+						<div class="table-responsive">
+							<table id="myTable" class="table datatable table-striped table-hover">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Picture</th>
+										<th scope="col">Firstname</th>
+										<th scope="col">Lastname</th>
+										<th scope="col">Date of Birth</th>
+										<th scope="col">Gender</th>
+										<th scope="col">Adopted By</th>
+										<th scope="col">Adopted Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for adopted in adoptions %}
+									<tr>
+										<th scope="row">{{ forloop.counter }}</th>
+										<td><a href="{% url 'auth:orphan_profile' adopted.orphan.id %}"><img src="{% if adopted.orphan.imageURL != '' %} {{ adopted.orphan.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a></td>
+										<td>{{ adopted.orphan.firstname }}</td>
+										<td>{{ adopted.orphan.lastname }}</td>
+										<td>{{ adopted.orphan.dob }}</td>
+										<td>{{ adopted.orphan.gender }}</td>
+										<td><a href="{% url 'aohi_admin:profile_view' adopted.user.id %}"><img src="{% if adopted.user.imageURL != '' %} {{ adopted.user.imageURL }} {% else %} {% static 'uploaded/user.png' %} {% endif %}" alt="Profile" class="rounded-circle" width="35"></a>{{ adopted.user.firstname }}</td>
+										<td>{{ adopted.orphan.date_created }}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+
 						<!-- End Table with stripped rows -->
 						{% else %}
 						<div class="row">
